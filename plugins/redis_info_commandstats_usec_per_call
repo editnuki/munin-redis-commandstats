@@ -40,7 +40,7 @@ fi
 
 if [ "$1" = "config" ]; then
 
-        echo 'graph_title redis info commandstats'
+        echo 'graph_title redis info commandstats usec_per_call'
         echo 'graph_args --base 1000 -l 0'
         echo 'graph_vlabel usec_per_call'
         echo 'graph_category Redis'
