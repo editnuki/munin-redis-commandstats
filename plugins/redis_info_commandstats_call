@@ -1,0 +1,79 @@
+#!/bin/bash
+# -*- sh -*-
+
+: << =cut
+
+=head1 NAME
+
+redis_info_connections - Plugin to monitor the redis info connections
+
+=head1 CONFIGURATION
+
+No configuration
+
+=head1 AUTHOR
+
+onuki yoshihisa
+
+=head1 LICENSE
+
+Unknown license
+
+=head1 MAGIC MARKERS
+
+ #%# family=auto
+ #%# capabilities=autoconf
+
+=cut
+
+. $MUNIN_LIBDIR/plugins/plugin.sh
+
+if [ "$1" = "autoconf" ]; then
+        if [ -x /usr/bin/redis-cli ]; then
+                echo yes
+                exit 0
+        else
+                echo no
+                exit 0
+        fi
+fi
+
+if [ "$1" = "config" ]; then
+
+        echo 'graph_title redis info commandstats calls'
+        echo 'graph_args --base 1000 -l 0'
+        echo 'graph_vlabel calls'
+        echo 'graph_category Redis'
+        echo 'graph_info commandstats calls'
+        echo 'cmdstat_set.label cmdstat_set '
+        echo 'cmdstat_set.draw LINE2'
+        echo 'cmdstat_set.info This redis cmdstat_set calls'
+        echo 'cmdstat_setex.label cmdstat_setex '
+        echo 'cmdstat_setex.draw LINE2'
+        echo 'cmdstat_setex.info This redis cmdstat_setex calls'
+        echo 'cmdstat_get.label cmdstat_get '
+        echo 'cmdstat_get.draw LINE2'
+        echo 'cmdstat_get.info This redis cmdstat_get calls'
+        echo 'cmdstat_getex.label cmdstat_getex '
+        echo 'cmdstat_getex.draw LINE2'
+        echo 'cmdstat_getex.info This redis cmdstat_getex calls'
+        echo 'cmdstat_del.label cmdstat_del '
+        echo 'cmdstat_del.draw LINE2'
+        echo 'cmdstat_del.info This redis cmdstat_del calls'
+        echo 'cmdstat_subscribe.label cmdstat_subscribe '
+        echo 'cmdstat_subscribe.draw LINE2'
+        echo 'cmdstat_subscribe.info This redis cmdstat_subscribe calls'
+        echo 'cmdstat_publish.label cmdstat_publish '
+        echo 'cmdstat_publish.draw LINE2'
+        echo 'cmdstat_publish.info This redis cmdstat_publish calls'
+        exit 0
+fi
+
+/usr/bin/redis-cli info commandstats | grep "cmdstat_set:"  |sed 's/\,/ /g' | sed 's/\:/ /g' | awk '{print $2}'  | sed 's/calls=//g' | awk '{ print "cmdstat_set.value "$1 }'
+/usr/bin/redis-cli info commandstats | grep "cmdstat_setex:"  |sed 's/\,/ /g' | sed 's/\:/ /g' | awk '{print $2}'  | sed 's/calls=//g' | awk '{ print "cmdstat_setex.value "$1 }'
+/usr/bin/redis-cli info commandstats | grep "cmdstat_get:"  |sed 's/\,/ /g' | sed 's/\:/ /g' | awk '{print $2}'  | sed 's/calls=//g' | awk '{ print "cmdstat_get.value "$1 }'
+/usr/bin/redis-cli info commandstats | grep "cmdstat_getex:"  |sed 's/\,/ /g' | sed 's/\:/ /g' | awk '{print $2}'  | sed 's/calls=//g' | awk '{ print "cmdstat_getex.value "$1 }'
+/usr/bin/redis-cli info commandstats | grep "cmdstat_del:"  |sed 's/\,/ /g' | sed 's/\:/ /g' | awk '{print $2}'  | sed 's/calls=//g' | awk '{ print "cmdstat_del.value "$1 }'
+/usr/bin/redis-cli info commandstats | grep "cmdstat_subscribe:"  |sed 's/\,/ /g' | sed 's/\:/ /g' | awk '{print $2}'  | sed 's/calls=//g' | awk '{ print "cmdstat_subscribe.value "$1 }'
+/usr/bin/redis-cli info commandstats | grep "cmdstat_publish:"  |sed 's/\,/ /g' | sed 's/\:/ /g' | awk '{print $2}'  | sed 's/calls=//g' | awk '{ print "cmdstat_publish.value "$1 }'
+
