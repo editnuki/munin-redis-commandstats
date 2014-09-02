@@ -5,7 +5,7 @@ if [ -f /usr/share/munin/plugins/redis_info_commandstats_call ]; then
   echo "exist redis_info_commandstats_call plugin"
 else
   cp plugins/redis_info_commandstats_call /usr/share/munin/plugins
-  chown /usr/share/munin/plugins/redis_info_commandstats_call
+  chown root. /usr/share/munin/plugins/redis_info_commandstats_call
   chmod a+x /usr/share/munin/plugins/redis_info_commandstats_call
   ln -s /usr/share/munin/plugins/redis_info_commandstats_call /etc/munin/plugins/
 fi
