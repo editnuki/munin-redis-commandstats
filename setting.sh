@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-if [ -f /usr/share/munin/plugins/redis_info_commandstats_call ];
+if [ -f /usr/share/munin/plugins/redis_info_commandstats_call ]; then
   echo "exist redis_info_commandstats_call plugin"
 else
   cp plugins/redis_info_commandstats_call /usr/share/munin/plugins
@@ -11,7 +11,7 @@ else
 fi
 
 
-if [ -f /usr/share/munin/plugins/redis_info_commandstats_usec_per_call ];
+if [ -f /usr/share/munin/plugins/redis_info_commandstats_usec_per_call ]; then
   echo "exist redis_info_commandstats_usec_per_call "
 else
   cp plugins/redis_info_commandstats_usec_per_call /usr/share/munin/plugins
