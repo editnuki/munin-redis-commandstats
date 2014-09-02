@@ -13,6 +13,6 @@ How to setting
 
 sample picture
 
-![Alt commandstats_usec_per_call](redis_info_commandstats-day.png)
-![Alt commandstats_call](redis_info_commandstats_call-day.png)
+![Alt commandstats_usec_per_call](/redis_info_commandstats-day.png)
+![Alt commandstats_call](/redis_info_commandstats_call-day.png)
 
